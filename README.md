@@ -1,1 +1,1 @@
-# best_practice_collection
+# best practice for some code segments, algorythms and so.
