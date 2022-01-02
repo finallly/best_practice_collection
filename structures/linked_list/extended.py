@@ -7,8 +7,8 @@ def linked_list_generator(lst: list) -> LinkedListNode:
     buff = LinkedListNode(lst.pop(0))
     head = buff
 
-    for val in lst:
-        node = LinkedListNode(val)
+    for value in lst:
+        node = LinkedListNode(value)
         buff.next = node
         buff = buff.next
 
@@ -46,7 +46,9 @@ class SingleLinkedListMethods(object):
         return node
 
     def remove_rom_end(self, node: LinkedListNode, number: int) -> LinkedListNode:
-        fast = slow = node
+        slow = node
+        fast = slow
+
         for _ in range(number):
             fast = fast.next
 
@@ -60,7 +62,7 @@ class SingleLinkedListMethods(object):
 
         return node
 
-    def reverse_list(self, head: Optional[LinkedListNode]) -> Optional[LinkedListNode]:
+    def reverse_list(self, head: LinkedListNode) -> Optional[LinkedListNode]:
         last = None
 
         while head:
@@ -71,15 +73,39 @@ class SingleLinkedListMethods(object):
 
         return last
 
-    def remove_elements(self, head, val: int):
+    def remove_elements(self, head: LinkedListNode, value: int) -> Optional[LinkedListNode]:
         dummy = LinkedListNode(next=head)
         curr, prev = head, dummy
 
         while curr:
-            if curr.val == val:
+            if curr.val == value:
                 prev.next = curr.next
             else:
                 prev = curr
             curr = curr.next
 
         return dummy.next
+
+    def rotate_right(self, head: LinkedListNode, offset: int) -> Optional[LinkedListNode]:
+        root = head
+        length = 0
+
+        while root:
+            length += 1
+            root = root.next
+
+        iterations = offset % length
+        root = head
+        copy = root
+        prev = None
+
+        for _ in range(iterations):
+            while root.next:
+                prev = root
+                root = root.next
+
+            prev.next = None
+            root.next = copy
+            copy = root
+
+        return root
