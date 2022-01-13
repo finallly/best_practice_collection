@@ -3,11 +3,11 @@ from typing import Union, Any, Optional
 from .base import LinkedListNode
 
 
-def linked_list_generator(lst: list) -> LinkedListNode:
-    buff = LinkedListNode(lst.pop(0))
+def linked_list_generator(nodes: list) -> LinkedListNode:
+    buff = LinkedListNode(nodes.pop(0))
     head = buff
 
-    for value in lst:
+    for value in nodes:
         node = LinkedListNode(value)
         buff.next = node
         buff = buff.next
@@ -45,7 +45,7 @@ class SingleLinkedListMethods(object):
 
         return node
 
-    def remove_rom_end(self, node: LinkedListNode, number: int) -> LinkedListNode:
+    def remove_from_end(self, node: LinkedListNode, number: int) -> LinkedListNode:
         slow = node
         fast = slow
 
@@ -62,20 +62,32 @@ class SingleLinkedListMethods(object):
 
         return node
 
-    def reverse_list(self, head: LinkedListNode) -> Optional[LinkedListNode]:
-        last = None
+    def add_to_end(self, head: LinkedListNode, node: LinkedListNode) -> LinkedListNode:
+        buff = head
+        end = head
 
         while head:
-            buff = head
+            end = head
             head = head.next
+
+        end.next = node
+
+        return buff
+
+    def reverse_list(self, node: LinkedListNode) -> Optional[LinkedListNode]:
+        last = None
+
+        while node:
+            buff = node
+            node = node.next
             buff.next = last
             last = buff
 
         return last
 
-    def remove_elements(self, head: LinkedListNode, value: int) -> Optional[LinkedListNode]:
-        dummy = LinkedListNode(next=head)
-        curr, prev = head, dummy
+    def remove_elements(self, node: LinkedListNode, value: int) -> Optional[LinkedListNode]:
+        dummy = LinkedListNode(next=node)
+        curr, prev = node, dummy
 
         while curr:
             if curr.val == value:
@@ -86,8 +98,8 @@ class SingleLinkedListMethods(object):
 
         return dummy.next
 
-    def rotate_right(self, head: LinkedListNode, offset: int) -> Optional[LinkedListNode]:
-        root = head
+    def rotate_right(self, node: LinkedListNode, offset: int) -> Optional[LinkedListNode]:
+        root = node
         length = 0
 
         while root:
@@ -95,7 +107,7 @@ class SingleLinkedListMethods(object):
             root = root.next
 
         iterations = offset % length
-        root = head
+        root = node
         copy = root
         prev = None
 
